@@ -12,11 +12,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- QR Code Generator -->
-<<<<<<< HEAD
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
-=======
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
->>>>>>> fdc0db2 (Update seller_portal.html)
     
     <style>
         :root {
@@ -587,11 +583,7 @@
     <!-- Navigation Header -->
     <nav class="navbar navbar-expand-lg navbar-walmart fixed-top" id="mainNavbar">
         <div class="container">
-<<<<<<< HEAD
-            <a class="navbar-brand" href="index.html">
-=======
             <a class="navbar-brand" href="/">
->>>>>>> fdc0db2 (Update seller_portal.html)
                 <div class="walmart-logo">W</div>
                 Walmart DRP
             </a>
@@ -613,11 +605,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-<<<<<<< HEAD
-                        <a class="nav-link active" href="seller_portal.html">
-=======
                         <a class="nav-link active" href="/seller-portal/">
->>>>>>> fdc0db2 (Update seller_portal.html)
                             <i class="fas fa-store me-2"></i>Seller Portal
                         </a>
                     </li>
@@ -632,11 +620,7 @@
                             <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user-circle me-2"></i>Profile</a></li>
                             <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog me-2"></i>Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
-<<<<<<< HEAD
-                            <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-=======
                             <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
->>>>>>> fdc0db2 (Update seller_portal.html)
                         </ul>
                     </li>
                 </ul>
@@ -1015,211 +999,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
     <script>
-<<<<<<< HEAD
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('mainNavbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // QR Code generation counter
-        let qrCounter = 1000;
-
-        // Generate QR Code functionality
-        function generateQR() {
-            const productName = document.getElementById('product-name').value;
-            const category = document.getElementById('product-category').value;
-            const description = document.getElementById('product-description').value;
-
-            if (!productName) {
-                showAlert('Please enter a product/service name', 'warning');
-                return;
-            }
-
-            // Generate unique QR code
-            qrCounter++;
-            const qrCode = `QR-${qrCounter}`;
-            
-            // Show loading
-            const qrDisplay = document.getElementById('qr-display');
-            qrDisplay.innerHTML = `
-                <div class="text-center py-4">
-                    <div class="loading-spinner mx-auto mb-3" style="width: 40px; height: 40px; border-width: 3px;"></div>
-                    <p class="text-muted">Generating QR code...</p>
-                </div>
-            `;
-
-            // Simulate generation delay
-            setTimeout(() => {
-                // Clear the display and create QR code
-                qrDisplay.innerHTML = '';
-                
-                // Create QR code container
-                const qrContainer = document.createElement('div');
-                qrContainer.className = 'qr-code-container';
-                qrContainer.id = 'qr-code-canvas';
-                qrDisplay.appendChild(qrContainer);
-
-                // Generate QR code
-                QRCode.toCanvas(qrContainer, qrCode, {
-                    width: 200,
-                    height: 200,
-                    colorDark: '#0071ce',
-                    colorLight: '#ffffff',
-                    margin: 2
-                }, function (error) {
-                    if (error) {
-                        console.error(error);
-                        showAlert('Error generating QR code', 'error');
-                        return;
-                    }
-                    
-                    // Add QR code info
-                    const infoDiv = document.createElement('div');
-                    infoDiv.innerHTML = `
-                        <h6 class="fw-bold mb-2">${qrCode}</h6>
-                        <p class="text-muted mb-2">${productName}</p>
-                        <small class="text-muted">${category}</small>
-                        <div class="mt-3">
-                            <button class="btn btn-walmart btn-sm me-2" onclick="downloadQR('${qrCode}')">
-                                <i class="fas fa-download me-1"></i>Download
-                            </button>
-                            <button class="btn btn-walmart-yellow btn-sm" onclick="printQR('${qrCode}')">
-                                <i class="fas fa-print me-1"></i>Print
-                            </button>
-                        </div>
-                    `;
-                    qrDisplay.appendChild(infoDiv);
-
-                    // Add to table (in real app, this would save to database)
-                    addQRToTable(qrCode, productName, category, description);
-                    
-                    // Clear form
-                    document.getElementById('product-name').value = '';
-                    document.getElementById('product-description').value = '';
-                    
-                    showAlert(`QR code ${qrCode} generated successfully!`, 'success');
-                });
-            }, 1500);
-        }
-
-        // Add QR to table
-        function addQRToTable(qrCode, productName, category, description) {
-            const tableBody = document.querySelector('.table-walmart tbody');
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td><strong>${qrCode}</strong></td>
-                <td>${productName}</td>
-                <td>0</td>
-                <td><span class="trust-badge trust-pending" style="font-size: 0.7rem; padding: 0.3rem 0.8rem;">Pending</span></td>
-                <td>
-                    <button class="btn btn-sm btn-walmart me-1" onclick="viewQR('${qrCode}')">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="btn btn-sm btn-walmart-yellow me-1" onclick="editQR('${qrCode}')">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger" onclick="deleteQR('${qrCode}')">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            `;
-            tableBody.insertBefore(newRow, tableBody.firstChild);
-        }
-
-        // QR Code actions
-        function viewQR(qrCode) {
-            showAlert(`Viewing details for ${qrCode}`, 'info');
-        }
-
-        function editQR(qrCode) {
-            showAlert(`Edit functionality for ${qrCode} - Coming soon!`, 'info');
-        }
-
-        function deleteQR(qrCode) {
-            if (confirm(`Are you sure you want to delete ${qrCode}?`)) {
-                // In real app, this would call API to delete
-                showAlert(`${qrCode} deleted successfully`, 'success');
-                // Remove from table
-                const row = event.target.closest('tr');
-                if (row) row.remove();
-            }
-        }
-
-        function downloadQR(qrCode) {
-            const canvas = document.querySelector('#qr-code-canvas canvas');
-            if (canvas) {
-                const link = document.createElement('a');
-                link.download = `${qrCode}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
-                showAlert(`${qrCode} downloaded successfully`, 'success');
-            }
-        }
-
-        function printQR(qrCode) {
-            const printWindow = window.open('', '_blank');
-            const canvas = document.querySelector('#qr-code-canvas canvas');
-            if (canvas) {
-                printWindow.document.write(`
-                    <html>
-                        <head><title>Print ${qrCode}</title></head>
-                        <body style="text-align: center; font-family: Arial, sans-serif;">
-                            <h2>${qrCode}</h2>
-                            <img src="${canvas.toDataURL()}" style="max-width: 300px;">
-                            <p>Generated by Walmart DRP System</p>
-                        </body>
-                    </html>
-                `);
-                printWindow.document.close();
-                printWindow.print();
-            }
-        }
-
-        // Update stats dynamically
-        function updateStats() {
-            const statsNumbers = document.querySelectorAll('.stats-number');
-            statsNumbers.forEach(stat => {
-                if (stat.textContent.includes('%')) {
-                    // For percentage values, slight variations
-                    const currentValue = parseFloat(stat.textContent.replace('%', ''));
-                    const variation = (Math.random() - 0.5) * 2;
-                    const newValue = Math.max(0, Math.min(100, currentValue + variation));
-                    stat.textContent = newValue >= 0 ? `+${newValue.toFixed(0)}%` : `${newValue.toFixed(0)}%`;
-                } else if (stat.textContent.includes('.')) {
-                    // For decimal values (ratings)
-                    const currentValue = parseFloat(stat.textContent);
-                    const variation = (Math.random() - 0.5) * 0.1;
-                    const newValue = Math.max(1, Math.min(5, currentValue + variation));
-                    stat.textContent = newValue.toFixed(1);
-                } else if (!stat.textContent.includes(',') && parseInt(stat.textContent) < 100) {
-                    // For small integers
-                    const currentValue = parseInt(stat.textContent);
-                    const variation = Math.floor((Math.random() - 0.5) * 2);
-                    stat.textContent = Math.max(0, currentValue + variation);
-                } else if (stat.textContent.includes(',')) {
-                    // For large numbers with commas
-                    const currentValue = parseInt(stat.textContent.replace(',', ''));
-                    const variation = Math.floor((Math.random() - 0.5) * 20);
-                    const newValue = Math.max(0, currentValue + variation);
-                    stat.textContent = newValue.toLocaleString();
-                }
-            });
-        }
-
-        // Update stats every 45 seconds
-        setInterval(updateStats, 45000);
-
-        // Show alert function
-        function showAlert(message, type) {
-            const alertClass = type === 'success' ? 'alert-success' : 
-                              type === 'warning' ? 'alert-warning' : 
-                              type === 'info' ? 'alert-info' : 'alert-danger';
-=======
         // COMPLETE SCRIPT REPLACEMENT - Replace your entire <script> section with this:
 
 // Navbar scroll effect
@@ -1340,7 +1119,6 @@ function generateQR() {
 
             // Add to table
             addQRToTable(qrCode, productName, category, description);
->>>>>>> fdc0db2 (Update seller_portal.html)
             
             // Clear form
             document.getElementById('product-name').value = '';
@@ -1359,44 +1137,6 @@ function generateQR() {
     }, 1500);
 }
 
-<<<<<<< HEAD
-        // Add entrance animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.card-walmart, .stats-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        });
-
-        // Loading spinner for stats cards
-        const loadingSpinner = `
-            <div class="loading-spinner" style="width: 30px; height: 30px; border-width: 2px; margin: 10px auto;"></div>
-        `;
-
-        // Add CSS for loading spinner
-        const style = document.createElement('style');
-        style.textContent = `
-            .loading-spinner {
-                border: 3px solid rgba(255, 194, 32, 0.2);
-                border-top: 3px solid var(--walmart-yellow);
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-=======
 // Add QR to table
 function addQRToTable(qrCode, productName, category, description) {
     const tableBody = document.querySelector('.table-walmart tbody');
@@ -1593,7 +1333,6 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
->>>>>>> fdc0db2 (Update seller_portal.html)
     </script>
 </body>
 </html>
