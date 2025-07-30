@@ -701,21 +701,21 @@
             const userData = localStorage.getItem('walmartDRPUser') || sessionStorage.getItem('walmartDRPUser');
             
             if (!userData) {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
                 return null;
             }
             
             try {
                 const user = JSON.parse(userData);
                 if (!user.isLoggedIn) {
-                    window.location.href = 'login.html';
+                    window.location.href = 'index.html';
                     return null;
                 }
                 return user;
             } catch (error) {
                 localStorage.removeItem('walmartDRPUser');
                 sessionStorage.removeItem('walmartDRPUser');
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
                 return null;
             }
         }
@@ -762,20 +762,20 @@
                 console.log('🔄 Attempting redirect to login page...');
                 
                 // Force immediate redirect
-                window.location.replace('login.html');
+                window.location.replace('index.html');
                 
             } catch (error) {
                 console.error('❌ Logout error:', error);
                 
                 // Fallback: try different redirect methods
                 try {
-                    window.location.href = 'login.html';
+                    window.location.href = 'index.html';
                 } catch (error2) {
                     try {
-                        window.location = 'login.html';
+                        window.location = 'index.html';
                     } catch (error3) {
                         // Last resort - manual instruction
-                        alert('Logout completed. Please manually navigate to login.html');
+                        alert('Logout completed. Please manually navigate to index.html');
                         console.error('❌ All redirect methods failed:', error3);
                     }
                 }
@@ -788,7 +788,7 @@
             localStorage.clear();
             sessionStorage.clear();
             alert('Logged out successfully!');
-            window.location.replace('login.html');
+            window.location.replace('index.html');
         }
         */
 
